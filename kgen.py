@@ -11,7 +11,7 @@ from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey, RSAPriva
 
 class KeyGeneratorV2:
 
-    def __init__( self, n_sym: int = 16, n_asym: int = 2048, name: str = "k" ):
+    def __init__( self, n_sym: int = 128, n_asym: int = 2048, name: str = "k" ):
         """
         Initializes the KeyGeneratorV2 class with default parameters for symmetric and asymmetric key generation.
         :param n_sym: The size of the symmetric key to be generated, in bytes. Default is 16 bytes (128 bits) for AES-128.
@@ -24,12 +24,12 @@ class KeyGeneratorV2:
 
     def gen_sym_key( self, n: int = None ) -> bytes:
         """
-        Generates a random 16-byte key for AES encryption.
-        :param n: The size of the key to be generated, in bytes. Default is 16 bytes (128 bits) for AES-128.
+        Generates a random symmetric key for encryption and decryption.
+        :param n: The size of the key, in bits. Default is 128 bits (16 bytes) for AES-128. If n is provided, it will be used instead of the default n_sym.
         :return: Randomly generated key, in bytes format.
         """
         n = n if n else self.n_sym
-        k = rand(n)  # generate a random 16-byte key
+        k = rand( n//8 )  # generate a random 16-byte key, n is in bits, so we divide by 8 to get the number of bytes
         return k
 
     def gen_asym_key( self, n: int = None ) -> tuple[RSAPublicKey, RSAPrivateKey]:
@@ -94,9 +94,12 @@ def run():
     """
     generator = KeyGeneratorV2()
     try:
-        mode = sys.argv[1].lower() # Extract mode, either "s" for symmetric or "a" for asymmetric
+        mode = None
         size = None
         name = None
+
+        if len(sys.argv) > 1:
+            mode = sys.argv[1].lower()  # Extract mode, either "s" for symmetric or "a" for asymmetric
 
         if len(sys.argv) > 2:
             size = sys.argv[1].lower()
@@ -104,7 +107,7 @@ def run():
         if len(sys.argv) > 3:
             name = sys.argv[2].lower() # Extract name for the key file(s)
 
-        if mode == "s":
+        if mode == "s" or None:
             key = generator.gen_sym_key() if size is None else generator.gen_sym_key( int(size) )
             generator.save_sym_key_to_file( key, name )
             print(">> Symmetric key generated and saved to k.key")
@@ -113,6 +116,9 @@ def run():
             public_k, private_k = generator.gen_asym_key() if size is None else generator.gen_asym_key( int(size) )
             generator.save_asym_keys_to_files(public_k, private_k, name)
             print(">> Asymmetric key pair generated and saved to public.key and private.key")
+
+        else:
+            ValueError("Invalid mode. Use 's' for symmetric key or 'a' for asymmetric key pair.")
 
     except Exception as e:
         print(f">> There was an error: {e}")

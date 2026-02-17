@@ -9,3 +9,6 @@
 *.key
 *.pem
 *.txt
+
+# Exceptions
+!requirements.txt
