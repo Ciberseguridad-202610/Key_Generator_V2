@@ -1,0 +1,11 @@
+# IntelliJ and vscode
+.idea
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Keys and text files
+*.key
+*.pem
+*.txt
