@@ -25,7 +25,7 @@ Donde
 
 Los valores por defecto son:
 - `<modo>`: s para simétrico
-- `<tamanio_llave>`: 16 bytes (128 bits) para simétrico y 2048 bits para asimétrico
+- `<tamanio_llave>`: 128 bits para simétrico y 2048 bits para asimétrico
 - `<nombre_archivo>`: k -> k.key para simétrico y k_private.pem/k_public.pem para asimétrico
 
 ## Ejemplo de uso
