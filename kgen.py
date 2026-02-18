@@ -1,4 +1,4 @@
-# Key Generator V2 - L3 Ciberseguridad
+# Key Generator V2 - Ciberseguridad
 # Author: Adrian Velasquez
 
 import sys
@@ -16,7 +16,9 @@ class KeyGeneratorV2:
         Initializes the KeyGeneratorV2 class with default parameters for symmetric and asymmetric key generation.
         :param n_sym: The size of the symmetric key to be generated, in bytes. Default is 16 bytes (128 bits) for AES-128.
         :param n_asym: The size of the asymmetric key to be generated, in bits. Default is 2048 bits for RSA.
-        :param name: The base name for the key file(s) to be saved. Default is "k". For symmetric keys, the file will be saved as {name}.key. For asymmetric keys, the private key will be saved as {name}_private.pem and the public key as {name}_public.pem.
+        :param name: The base name for the key file(s) to be saved. Default is "k".
+        For symmetric keys, the file will be saved as {name}.key.
+        For asymmetric keys, the private key will be saved as {name}_private.pem and the public key as {name}_public.pem.
         """
         self.n_sym = n_sym
         self.n_asym = n_asym
@@ -25,7 +27,8 @@ class KeyGeneratorV2:
     def gen_sym_key( self, n: int = None ) -> bytes:
         """
         Generates a random symmetric key for encryption and decryption.
-        :param n: The size of the key, in bits. Default is 128 bits (16 bytes) for AES-128. If n is provided, it will be used instead of the default n_sym.
+        :param n: The size of the key, in bits. Default is 128 bits (16 bytes) for AES-128.
+        If n is provided, it will be used instead of the default n_sym.
         :return: Randomly generated key, in bytes format.
         """
         n = n if n else self.n_sym
