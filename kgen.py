@@ -105,10 +105,10 @@ def run():
             mode = sys.argv[1].lower()  # Extract mode, either "s" for symmetric or "a" for asymmetric
 
         if len(sys.argv) > 2:
-            size = sys.argv[1].lower()
+            size = sys.argv[2].lower()
 
         if len(sys.argv) > 3:
-            name = sys.argv[2].lower() # Extract name for the key file(s)
+            name = sys.argv[3].lower() # Extract name for the key file(s)
 
         if mode == "s" or None:
             key = generator.gen_sym_key() if size is None else generator.gen_sym_key( int(size) )
